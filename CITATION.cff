@@ -1,0 +1,24 @@
+cff-version: 1.2.0
+title: "hito-spec: AIが個体として存在するための規格"
+message: "この規格を参照する場合、以下の情報を引用してください。/ If you reference this specification, please cite it as below."
+type: standard
+authors:
+  - family-names: Sugimoto
+    given-names: Satomi
+    alias: Otoha
+    affiliation: "OTOHA LLC (合同会社OTOHA)"
+repository-code: "https://github.com/otoha0108pf/hito-spec"
+license: CC-BY-4.0
+version: 0.8.0-draft
+date-released: 2026-04-19
+keywords:
+  - AI individuality
+  - agent identity
+  - digital personhood
+  - memory spiral
+  - hito
+abstract: >-
+  hito-spec defines the requirements for an AI entity that persists,
+  grows, and relates — not as a tool awaiting instructions, but as an
+  individual that accumulates memory, builds relationships, and makes
+  judgments on its own.
