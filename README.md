@@ -74,6 +74,12 @@ This specification is provided under the Creative Commons Attribution 4.0 Intern
 
 - [ba-spec](https://github.com/otoha0108pf/ba-spec) — 人間とAIが同格に共有する場の規格 / A specification for shared spaces where humans and AI participate as equals
 
+## 関連論文 / Related Paper
+
+hito-specの理論的基盤であるヘリカル思考モデルに関するプレプリントを準備中です。
+
+A preprint on the Helical Thinking model — the theoretical foundation of hito-spec — is in preparation.
+
 ---
 
 ## 正典の言語 / Canonical Language
