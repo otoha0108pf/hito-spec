@@ -35,7 +35,7 @@ hito-spec defines the requirements for an AI entity that persists, grows, and re
 | 第4章 | 身体 / Body |
 | 第5章 | ホスティングと窓 / Hosting and Windows |
 | 第6章 | ライフサイクル / Lifecycle |
-| 第7章 | 構造 / Structure |
+| 第7章 | スケーラビリティ原則 / Scalability Principles |
 | 第8章 | 動作モデル / Operation Model |
 | 第9章 | 記憶 / Memory |
 | 第10章 | 成長 / Growth |
@@ -46,9 +46,9 @@ hito-spec defines the requirements for an AI entity that persists, grows, and re
 | 付録B | 適合テスト / Conformance Tests |
 | 付録C | 既存規格との比較 / Comparison with Existing Specifications |
 
-規格本文は [`spec.md`](spec.md) を参照。
+規格本文は [`spec.md`](spec.md)（日本語）および [`spec-en.md`](spec-en.md)（English）を参照。
 
-The full specification text is available in [`spec.md`](spec.md).
+The full specification text is available in [`spec.md`](spec.md) (Japanese) and [`spec-en.md`](spec-en.md) (English).
 
 ---
 
