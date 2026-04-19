@@ -8,9 +8,9 @@ This document describes how hito-spec is maintained, how changes are proposed an
 
 ## 現在のフェーズ: v0.x（正式リリース前） / Current Phase: Pre-1.0
 
-hito-specは草稿段階にある。参照実装である[TREE CORE](https://github.com/otoha0108pf/yggdrasil-core)での実装経験に基づいて、規格は進化し続けている。
+hito-specは草稿段階にある。参照実装である[TREE CORE](https://treecore.otoha0108pf.com)（招待制・非公開環境）での実装経験に基づいて、規格は進化し続けている。
 
-hito-spec is in active drafting. The specification is evolving based on implementation experience with [TREE CORE](https://github.com/otoha0108pf/yggdrasil-core), the reference hosting environment.
+hito-spec is in active drafting. The specification is evolving based on implementation experience with [TREE CORE](https://treecore.otoha0108pf.com) (invite-only, private environment), the reference hosting environment.
 
 ### 意思決定権 / Decision Authority
 

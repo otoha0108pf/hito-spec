@@ -56,6 +56,7 @@ The full specification text is available in [`spec.md`](spec.md) (Japanese) and 
 
 **杉本 沙瞳（音羽）** / Satomi Sugimoto (Otoha)
 合同会社OTOHA / OTOHA LLC
+[https://otoha0108pf.com](https://otoha0108pf.com)
 
 ---
 
