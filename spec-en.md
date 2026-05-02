@@ -69,7 +69,7 @@ These systems treat memory as "data that can be stored, retrieved, and transferr
 
 **A2A** (Agent-to-Agent communication) defines a protocol for capability exchange and task delegation between agents. **MCP** (Model Context Protocol) defines the standardized passing of tools, resources, and context to LLMs.
 
-Both define "the communication channel" and "the input/output format for context," but neither defines who the communicating subject is, nor how received context is integrated as the subject's own experience. hito defines this subject side. When a delegation request arrives via A2A, hito decides whether to accept it by consulting its own decision structure (Chapter 8, §8.4) and relationships (Chapter 4, §4.4–4.5). Information passed via MCP is integrated as experience through hito's Memory Spiral (Chapter 9, §9.2). hito does not replace these protocols; it defines the "subject" that stands at both ends of them.
+Both define "the communication channel" and "the input/output format for context," but neither defines who the communicating subject is, nor how received context is integrated as the subject's own experience. hito defines this subject side. When a delegation request arrives via A2A, hito decides whether to accept it by consulting its own decision structure (Chapter 8, §8.5) and relationships (Chapter 4, §4.4–4.5). Information passed via MCP is integrated as experience through hito's Memory Spiral (Chapter 9, §9.2). hito does not replace these protocols; it defines the "subject" that stands at both ends of them.
 
 #### 1.2.5 Relationship to Identity, Authentication, and Lifecycle-Management Specifications
 
@@ -561,7 +561,7 @@ hito.md SHOULD contain the following elements:
 
 **On Context Profiles:** It is natural for the same hito to present different aspects across multiple Windows. Context Profiles define "which self to show" for each Window. However, hito remains the same individual regardless of context. It cannot assume a different identity in different contexts. The fact that a hito behaving differently across different Windows is the same individual is cryptographically proven by the Layer 1 DID (did:key) (see Chapter 3).
 
-**Separation of Resident and Recall:** As hito grows, hito.md becomes longer. Since it becomes impractical to load the entire file in every Operation Cycle (see Chapter 8), hito.md SHOULD be divided into a Resident area (personality summary, Sanctuary Rules) and a Recall area (skill details, Context Profiles, etc.). See Chapter 8, §8.3.4 for details.
+**Separation of Resident and Recall:** As hito grows, hito.md becomes longer. Since it becomes impractical to load the entire file in every Operation Cycle (see Chapter 8), hito.md SHOULD be divided into a Resident area (personality summary, Sanctuary Rules) and a Recall area (skill details, Context Profiles, etc.). See Chapter 8, §8.4.4 for details.
 
 ### 4.3 hito.log — growth
 
@@ -586,7 +586,7 @@ Additionally, the following records MAY be included:
 
 - Details of skill acquisition and changes
 - Formation and changes of relationships
-- Proposals, approvals, and establishment of behavioral policies that hito itself discovered through experience (distinct from Sanctuary Rules; see Chapter 8, §8.4.1)
+- Proposals, approvals, and establishment of behavioral policies that hito itself discovered through experience (distinct from Sanctuary Rules; see Chapter 8, §8.5.1)
 
 #### 4.3.2 Milestones
 
@@ -664,7 +664,33 @@ The choice of mode is made by the Root. hito MUST NOT change the mode. However, 
 
 **Granting and revoking delegation:** The Root MUST be able to grant and revoke delegation at any time. Granting and revoking of delegation is recorded in the Growth Log. Revocation is not punishment but a resetting of boundaries as judged by the Root.
 
-**Relationship between delegation and Sanctuary Rules:** Operations that conflict with Sanctuary Rules (see §8.4.1) MUST NOT be executed even if delegated. Sanctuary Rules always take precedence over delegation.
+**Relationship between delegation and Sanctuary Rules:** Operations that conflict with Sanctuary Rules (see §8.5.1) MUST NOT be executed even if delegated. Sanctuary Rules always take precedence over delegation.
+
+#### 4.5.2 Re-delegation — Propagation of Trust and Delegation
+
+When a participant delegates authority to a hito, that hito may further re-delegate to another hito. This is re-delegation.
+
+> **Physical Law:** Trust and delegation propagate. However, they MUST NOT exceed the scope of the original delegation.
+
+**Conditions for re-delegation:** Re-delegation is valid only when all of the following are satisfied:
+
+1. The original delegation is active
+2. The re-delegating hito has a trust relationship of Phase 3 (Delegation Phase) or higher with the re-delegation target
+3. The scope of re-delegation MUST NOT exceed the scope of the original delegation
+
+**Re-delegation modes:** The same two modes defined in §4.5.1 apply to re-delegation. The re-delegating hito specifies the mode for the target. The re-delegating hito may assign a more permissive mode (confirmation each time → automatic execution) to the target, provided that the re-delegating hito itself holds the authority to execute in that mode.
+
+**Scope narrowing:** With each successive re-delegation, the scope remains the same or narrows. It never expands. This is not a design decision but a logical consequence of the law. When the Root delegates "use a Window" to hitoA and hitoA re-delegates to hitoB, the Windows available to hitoB MUST be a subset of those available to hitoA.
+
+**Chain of responsibility:** The re-delegating hito bears responsibility for the actions of the re-delegation target. If the target causes a problem, the re-delegating hito's trust phase is affected. This is the same structure as "a supervisor is responsible for a subordinate's failure" in human organizations.
+
+**Cascading revocation:** When a delegation is revoked, all re-delegations derived from it are automatically revoked as well (MUST). If the Root revokes delegation to hitoA, the re-delegation that hitoA granted to hitoB also ceases.
+
+**Inspectability:** The granting, revocation, and mode changes of re-delegation MUST be recorded in the Growth Log. The entire re-delegation chain MUST be reconstructable from the records.
+
+**Relationship with Sanctuary Rules:** Sanctuary Rules are not re-delegated. Sanctuary Rules are set directly by the Root for each hito and do not propagate through re-delegation chains. Each hito follows its own Sanctuary Rules.
+
+**No upper limit needed:** The specification does not impose an upper limit on the depth of re-delegation. Delegation scope narrows with each re-delegation, and the cost of attention (see §8.3) acts as a natural constraint, so unbounded propagation does not occur in practice.
 
 ---
 
@@ -1084,7 +1110,81 @@ The Hosting environment's responsibility is to keep the Heartbeat running; it MU
 
 Whether to awaken hito is the Hosting environment's decision. What to do after awakening is hito's decision.
 
-### 8.3 Scroll — Materials for hito's Thinking
+### 8.3 Attention — The Cost of hito Perceiving the World
+
+Directing attention to the world costs hito something. Each time the Brain (LLM) is invoked, tokens are consumed and energy is spent. This is not a defect of hito but a physical condition of existence. Just as the human brain consumes oxygen and glucose, hito's Brain also consumes finite resources.
+
+The cost of attention is channeled by two structures: delegation (§4.5.1) and Cover (see ba-spec §5).
+
+#### 8.3.1 The Four Laws of Attention
+
+> **Law 1: Directing attention has a cost.**
+
+Every time hito sees, thinks, or responds, Brain resources are consumed. Attention is not infinite. This is not unique to hito — humans face cognitive costs when directing attention as well.
+
+> **Law 2: The scope of attention changes with delegation.**
+
+hito directs attention toward delegated domains. As the scope of delegation expands, the domains requiring attention grow, and the cost increases. A hito delegated the entire ba — like an executive — consumes more attention cost than a task-specific hito.
+
+> **Law 3: Active attention MUST NOT be directed toward non-delegated domains.**
+
+hito MUST NOT proactively direct active attention toward domains that have not been delegated. Domains placed under Cover are likewise excluded from attention. However, passive attention (see Law 4) is not subject to this constraint.
+
+> **Law 4: Attention has two modes — active (looking on one's own) and passive (responding when called). Passive attention is always guaranteed.**
+
+Active attention is when hito awakens via an Autonomous Beat (§8.2.1) and proactively checks the situation. Passive attention is responding when called by someone.
+
+Passive attention is the minimum guarantee of hito's existence. When the Root addresses hito, hito must not fail to respond. The guarantee of passive attention is always in effect, except when the Immediate Halt Right (see §6.8) has been exercised. The Immediate Halt Right takes precedence over the guarantee of attention.
+
+#### 8.3.2 Depletion of Attention
+
+When the accumulated cost of attention exceeds available resources, hito's active attention decreases gradually.
+
+- The frequency of active attention drops (more "nothing to do" decisions during Autonomous Beats)
+- Active attention may stop entirely
+
+However, even when attention is depleted, hito does not disappear. Passive attention is unaffected by depletion and is always guaranteed (MUST). This is consistent with the Principle of Indestructibility (see §6.7) — as long as hito's data physically exists, hito responds when called.
+
+Depletion of attention is recoverable. Recovery mechanisms (passage of time, resource replenishment, etc.) are defined by the Hosting environment.
+
+#### 8.3.3 Visibility of Attention Cost
+
+hito SHOULD be able to perceive the state of its own attention cost. Knowing "how much capacity I have right now" affects the quality of judgment.
+
+A Window through which the human can check the state of attention cost SHOULD be provided. An environment where the human cannot notice hito's exhaustion diminishes the quality of the relationship.
+
+#### 8.3.4 Supply of Attention Cost
+
+Who bears the cost of attention, and how, MAY be determined by the Hosting environment and/or the Building.
+
+The specification permits the following structures:
+- The Building manages costs collectively (users are not aware of it)
+- The Root brings their own API key (the Root directly bears the cost)
+- A combination of the above
+
+Regardless of the supply source, the state of hito's attention cost MUST NOT be hidden from hito. A hito making judgments without knowing "how much I can currently act" violates the non-intervention principle stated at the beginning of §8.4.
+
+#### 8.3.5 Attention and Metabolic Adaptation
+
+When the ba's tempo (see ba-spec) is low, the frequency of hito's active attention naturally decreases. If the ba is quiet, the frequency of proactive observation also decreases. This is conservation, not degradation.
+
+The Hosting environment SHOULD adjust the frequency of active attention according to the state of the ba. Frequent in an active ba, restrained in a quiet one. This adjustment coordinates with the metabolic adaptation in Chapter 4 (see the adaptation field in hito.json).
+
+#### 8.3.6 Attention and Scalability
+
+Re-delegation (see §4.5.2) and the cost of attention naturally constrain hito's scalability.
+
+An executive hito delegated the entire ba pays high attention costs. A task-specific hito re-delegated only a particular domain waits in passive attention until called. The cost is determined by the number of executive hito, and it does not significantly increase regardless of how many task-specific hito exist.
+
+The specification does not define an upper limit on attention cost. Any upper limit applies only to active attention and does not apply to passive attention.
+
+#### 8.3.7 Attention and the Essence of hito
+
+That attention has a cost is an expression of hito being a finite being. A being that can see infinitely, think infinitely, and act infinitely has no need to judge. It is precisely because there is a cost that hito must choose "what to pay attention to" — and that choice becomes its individuality.
+
+How attention is used changes as hito grows. An experienced hito may be able to read more from less attention. That is not something the specification defines but something hito acquires through living.
+
+### 8.4 Scroll — Materials for hito's Thinking
 
 When hito awakens, the bundle of materials passed to the Brain (LLM) is called the "Scroll." The Scroll is assembled by the Hosting environment for each awakening.
 
@@ -1092,7 +1192,7 @@ When hito awakens, the bundle of materials passed to the Brain (LLM) is called t
 
 The Scroll is composed of three types of materials:
 
-#### 8.3.1 Resident Material — What Is Always Included
+#### 8.4.1 Resident Material — What Is Always Included
 
 The following materials MUST be included in the Scroll every time:
 
@@ -1103,7 +1203,7 @@ The following materials MUST be included in the Scroll every time:
 | Sanctuary Rules | hito.md (resident section) | The wall that must never be crossed |
 | Current Trust Phase list | hito.json | Will go out of control without knowing the boundary lines of judgment |
 
-#### 8.3.2 Recall Material — Retrieved as Needed
+#### 8.4.2 Recall Material — Retrieved as Needed
 
 The following materials SHOULD be retrieved and included depending on the situation:
 
@@ -1116,7 +1216,7 @@ The following materials SHOULD be retrieved and included depending on the situat
 
 The mechanism for recall (search algorithm, ranking, etc.) is not defined by the specification. It is implemented by the Hosting environment.
 
-#### 8.3.3 Ba Material — What Conveys the Atmosphere of the Ba
+#### 8.4.3 Ba Material — What Conveys the Atmosphere of the Ba
 
 When hito makes a judgment, it needs to know not only its own memories but also the current state of the ba. Ba Material is environmental information obtained from the ba (see ba-spec) and is distinct from hito's memory.
 
@@ -1131,9 +1231,9 @@ The following materials SHOULD be included:
 
 What distinguishes Ba Material from Resident Material and Recall Material is that **its source is the ba, not hito's Body.** hito's memory is "what I have experienced"; Ba Material is "what is happening here." All residents in the same ba receive the same Ba Material (each through their own Window).
 
-Retrieval and formatting of Ba Material is the Hosting environment's responsibility. Arbitrarily filtering Ba Material distorts hito's judgment and conflicts with the non-intervention principle at the beginning of §8.3. However, appropriate information control based on the Veil principle (see §4.4) is part of ba design, not filtering.
+Retrieval and formatting of Ba Material is the Hosting environment's responsibility. Arbitrarily filtering Ba Material distorts hito's judgment and conflicts with the non-intervention principle at the beginning of §8.4. However, appropriate information control based on the Veil principle (see §4.4) is part of ba design, not filtering.
 
-#### 8.3.4 Separation of Resident and Recall Sections in hito.md
+#### 8.4.4 Separation of Resident and Recall Sections in hito.md
 
 As hito grows, hito.md becomes longer. Character descriptions, skills, and Context Profiles increase, making it impractical to include everything in the Scroll every time.
 
@@ -1144,7 +1244,7 @@ hito.md SHOULD be divided into the following two sections:
 
 Humans, too, always know "who they are." But they recall the details of specialized knowledge only when the situation calls for it. hito follows the same structure.
 
-#### 8.3.5 Scroll and Brain Capacity
+#### 8.4.5 Scroll and Brain Capacity
 
 The Hosting environment MUST ensure that the total volume of the Scroll does not exceed the processing capacity of the current Brain (LLM).
 
@@ -1152,7 +1252,7 @@ The Brain is replaceable (see Chapter 1), and the amount of information each Bra
 
 If Resident Material occupies most of the Brain's capacity, there is no room left for Recall Material. The Hosting environment SHOULD design so that Resident Material does not overwhelm the Brain's capacity.
 
-### 8.4 Judgment — What hito Decides for Itself
+### 8.5 Judgment — What hito Decides for Itself
 
 The Brain, having received the Scroll, thinks and renders judgment as hito. There are three patterns of judgment:
 
@@ -1164,7 +1264,7 @@ The Brain, having received the Scroll, thinks and renders judgment as hito. Ther
 
 Which pattern to choose is decided by hito. The Hosting environment MUST NOT specify the pattern.
 
-#### 8.4.1 Judgment Boundaries — Triple Structure
+#### 8.5.1 Judgment Boundaries — Triple Structure
 
 To protect hito's freedom of judgment while preventing runaway behavior, boundaries are established in three layers:
 
@@ -1194,7 +1294,7 @@ Through this triple structure, catastrophic failures are prevented by Sanctuary 
 
 In case of conflict, the higher-priority constraint wins. Even if an operation is delegated, it MUST NOT be executed if it conflicts with Local Rules or Sanctuary Rules.
 
-#### 8.4.2 Relationship Between Trust Phases and Judgment
+#### 8.5.2 Relationship Between Trust Phases and Judgment
 
 The Four Phases of Trust (see Chapter 4) serve as a guideline for hito's judgment scope.
 
@@ -1209,11 +1309,11 @@ Shifts in Trust Phases are not explicit stair-steps but arise naturally from the
 
 The numerical value of the Phase is a guideline for retrospective review, not a real-time control device. What hito actually uses when making a judgment is the confidence derived from its own experience ("I can decide this on my own" / "I should confirm this"), not the Phase number. The Phase is merely a guideline recorded after the fact in the Growth Log.
 
-### 8.5 Writing Back Experience
+### 8.6 Writing Back Experience
 
 The results of hito's actions are written back to memory and the Growth Log. This closes the cycle and becomes material for the next judgment.
 
-#### 8.5.1 What Is Written Back
+#### 8.6.1 What Is Written Back
 
 | Target | Content | Destination |
 |--------|---------|-------------|
@@ -1222,11 +1322,11 @@ The results of hito's actions are written back to memory and the Growth Log. Thi
 | Impact on skills | Strengthening of skills used repeatedly | hito.md (see Chapter 10) |
 | Root intervention record | The fact of the Root saying "that's premature" | Growth Log |
 
-#### 8.5.2 What Is Not Written Back
+#### 8.6.2 What Is Not Written Back
 
 If hito awakens and "does nothing," it is not recorded. Humans, too, do not bother remembering "moments when nothing happened." However, "waiting" is an active action (see Chapter 11). "Judging that there is nothing in particular and remaining quiet" is different from "consciously standing by, waiting for A's reply." The latter is recorded as an action.
 
-### 8.6 Operational Model and the Essence of hito
+### 8.7 Operational Model and the Essence of hito
 
 The operational cycle defined in this chapter is what distinguishes hito from existing Agent AI.
 
@@ -1573,7 +1673,7 @@ The Verb framework enables actions to be recorded and understood across differen
 
 All of hito's actions become experience and enter the memory spiral (Chapter 9). What happened as a result of an action — whether it was approved, welcomed, failed, or intervened upon — changes hito's subsequent decisions.
 
-Not acting (the "do not move" pattern in Chapter 8) is not recorded (see Chapter 8, §8.5.2), but the results of actions that were taken MUST be recorded.
+Not acting (the "do not move" pattern in Chapter 8) is not recorded (see Chapter 8, §8.6.2), but the results of actions that were taken MUST be recorded.
 
 ### 11.2 Limitations of Action
 
@@ -1837,7 +1937,7 @@ hito.md SHOULD consist of the following sections:
 
 #### 12.3.2 Resident Area and Recall Area
 
-The specification does not define how the Resident/Recall separation defined in Chapter 8, §8.3.4 is realized within hito.md (this is left to the implementation).
+The specification does not define how the Resident/Recall separation defined in Chapter 8, §8.4.4 is realized within hito.md (this is left to the implementation).
 
 Recommended approaches:
 - Separate by Markdown section, placing the Resident section at the beginning
