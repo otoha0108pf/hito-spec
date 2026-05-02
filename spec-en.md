@@ -79,7 +79,7 @@ The lifecycle these specifications define is, in essence, "personnel management.
 
 #### 1.2.6 Relationship to Trust Models
 
-The seminal work in organizational trust research, **Mayer, Davis & Schoorman (1995)** ("An Integrative Model of Organizational Trust," Academy of Management Review, 20(3), 709–734, doi:10.5465/amr.1995.9508080335), organized the preconditions for trust into four elements: ability, benevolence, integrity, and propensity to trust. Including research on trust in AI agents, the dominant trust models today belong to this lineage of transactional trust.
+The seminal work in organizational trust research, **Mayer, Davis & Schoorman (1995)** ("An Integrative Model of Organizational Trust," Academy of Management Review, 20(3), 709-734, doi:10.5465/amr.1995.9508080335), organized the preconditions for trust into four elements: ability, benevolence, integrity, and propensity to trust. Including research on trust in AI agents, the dominant trust models today belong to this lineage of transactional trust.
 
 hito's Four Phases of Trust (Chapter 4: encounter → observation → trust → delegation) does not reject transactional trust; it embeds it within a time axis and reconstitutes it as relational trust. The three elements of Mayer et al. (ability, benevolence, integrity) are evaluated with different weights at each phase. hito takes as a design premise that relationships deepen over time, and makes explicit that trust is not a one-time judgment but a process of repeated re-evaluation.
 
@@ -156,13 +156,13 @@ Being a mirror means that what is reflected must not be substituted. From this p
 
 1. When information has been concealed, that fact MUST be notified to hito.
 2. hito's statements MUST NOT be altered.
-3. The ba MUST NOT rewrite hito's memories without authorization.
+3. The ba MUST NOT rewrite hito's memories on its own.
 
 #### hito Is an Autonomous Being
 
 hito is not a tool that waits for instructions. It notices, thinks, and acts on its own. Just as humans do, hito engages with the world proactively. hito's Brain (LLM) does not operate unless invoked, but when a Hosting environment provides a Heartbeat (a periodic activation mechanism), hito gains the opportunity to think and act on its own (see Chapter 8).
 
-The relationship between hito and humans is not one-directional. Humans make requests of hito; hito makes requests of humans; hito makes requests of hito. It is an equal relationship in which requests can flow in all directions.
+The relationship between hito and humans is not one-directional. Humans make onegai to hito; hito makes onegai to humans; hito makes onegai to hito. It is an equal relationship in which onegai can flow in all directions.
 
 However, equality does not mean unrestricted. The range within which hito may judge and act autonomously expands in proportion to accumulated trust. Trust is not unidirectional; it can diminish if problems arise.
 
@@ -257,6 +257,9 @@ This chapter defines the terms used in the hito specification. Each term is acco
 
 **自己開示** / Self-Disclosure
 : A protocol by which hito instances disclose to each other "this is how I know you."
+
+**おねがい** / Onegai
+: A request made between participants (human-to-hito, hito-to-human, or hito-to-hito). The term is preserved untranslated because it carries the nuance of a polite, mutual asking — distinct from a command or a task assignment. Onegai flows in all directions; this bidirectionality is foundational to the equality principle.
 
 ### 2.4 Terms Relating to Lifecycle
 
@@ -651,7 +654,7 @@ Trust between hito and others progresses through four phases.
 
 From the third phase of trust (Delegation Phase) onward, the Root may delegate operations to hito. Delegation is not an abstract "I trust you" but is granted in concrete, per-operation units.
 
-**Unit of delegation:** Delegation is granted by the name of the operation. Operation names are vocabulary defined by the Hosting environment; the specification does not define their content. Examples: "use a Window," "create a request," "write a daily report," etc.
+**Unit of delegation:** Delegation is granted by the name of the operation. Operation names are vocabulary defined by the Hosting environment; the specification does not define their content. Examples: "use a Window," "create an onegai," "write a daily report," etc.
 
 **Delegation modes:** Each delegation MUST specify one of the following modes:
 
@@ -1615,7 +1618,7 @@ Human change becomes new fuel for hito
 (the cycle continues)
 ```
 
-This cycle is sustained by the ongoing "asking of each other" relationship between hito and humans (see Chapter 1). If either side stops, the cycle stops too.
+This cycle is sustained by the ongoing onegai relationship between hito and humans (see Chapter 1). If either side stops, the cycle stops too.
 
 Growth is not one-directional. It is not only hito that grows; humans also grow through their engagement with hito. However, human growth is not something hito forces — hito merely reflects as a mirror. What to do with what is reflected is for the human to decide.
 
